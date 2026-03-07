@@ -1,0 +1,44 @@
+name: Bug Report
+description: Report a bug in a package or skill
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this bug! Please fill out the information below.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package / Skill
+      description: Which package or skill is affected?
+      options:
+        - "@weAAAre/mcp-a11y-color"
+        - "skill: wcag-compliance"
+        - "Other"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Steps to reproduce the behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: A clear description of what you expected to happen.
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: "Node version, OS, package manager version, AI client (VS Code, Claude Desktop, etc.)"

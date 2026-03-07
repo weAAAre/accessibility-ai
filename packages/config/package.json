@@ -1,0 +1,14 @@
+{
+  "name": "@weaaare/config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./tsconfig/base.json": "./tsconfig/base.json",
+    "./tsconfig/library.json": "./tsconfig/library.json",
+    "./rstest": "./rstest/base.ts"
+  },
+  "devDependencies": {
+    "@rstest/core": "catalog:"
+  }
+}

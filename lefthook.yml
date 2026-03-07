@@ -1,0 +1,23 @@
+# https://lefthook.dev/configuration/
+# Run `pnpm lefthook install` after cloning to activate hooks.
+
+pre-commit:
+  parallel: true
+  commands:
+    biome:
+      glob: "*.{js,ts,jsx,tsx,json,jsonc}"
+      run: pnpm biome check --write --no-errors-on-unmatched {staged_files}
+      stage_fixed: true
+
+commit-msg:
+  commands:
+    commitlint:
+      run: pnpm commitlint --edit {1}
+
+pre-push:
+  parallel: true
+  commands:
+    check-types:
+      run: pnpm check-types
+    test:
+      run: pnpm test

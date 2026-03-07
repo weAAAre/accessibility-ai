@@ -1,0 +1,57 @@
+{
+  "name": "@weAAAre/mcp-a11y-color",
+  "version": "0.0.1",
+  "description": "MCP server for color accessibility — contrast checking, color blindness simulation, palette analysis, and WCAG 2.2 compliance",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "mcp-a11y-color": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "check-types": "tsc --noEmit",
+    "lint": "biome check .",
+    "dev": "tsc --watch",
+    "test": "rstest"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "catalog:",
+    "color2k": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@rstest/core": "catalog:",
+    "@types/node": "catalog:",
+    "@weaaare/config": "workspace:*",
+    "typescript": "catalog:"
+  },
+  "keywords": [
+    "mcp",
+    "accessibility",
+    "a11y",
+    "color",
+    "contrast",
+    "wcag",
+    "color-blindness",
+    "apca"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/weAAAre/accessibility-skills",
+    "directory": "packages/mcp-a11y-color"
+  },
+  "homepage": "https://github.com/weAAAre/accessibility-skills/tree/main/packages/mcp-a11y-color#readme",
+  "bugs": {
+    "url": "https://github.com/weAAAre/accessibility-skills/issues"
+  },
+  "author": "weAAAre <hola@weAAAre.com> (https://weAAAre.com)",
+  "engines": {
+    "node": ">=24"
+  }
+}

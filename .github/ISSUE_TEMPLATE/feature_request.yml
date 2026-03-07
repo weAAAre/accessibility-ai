@@ -1,0 +1,38 @@
+name: Feature Request
+description: Suggest a new feature, tool, or skill
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      options:
+        - "New MCP tool"
+        - "New skill"
+        - "Improve existing tool"
+        - "Improve existing skill"
+        - "Infrastructure / DX"
+        - "Other"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Is your feature request related to a problem?
+      description: A clear description of what the problem is.
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you'd like
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Describe alternatives you've considered
+  - type: textarea
+    id: wcag
+    attributes:
+      label: WCAG criteria
+      description: If applicable, which WCAG success criteria does this relate to?
