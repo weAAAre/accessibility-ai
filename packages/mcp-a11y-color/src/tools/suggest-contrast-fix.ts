@@ -1,8 +1,3 @@
-/**
- * suggest-contrast-fix tool
- * Given a failing color pair, suggests the closest accessible alternative.
- */
-
 import { z } from 'zod';
 import { deltaE } from '../lib/color-blindness.js';
 import { parseColor, rgbToHex } from '../lib/color-parser.js';
@@ -19,24 +14,26 @@ export const suggestContrastFixSchema = z.object({
     .describe('Text size context (default: normal)'),
 });
 
-export type SuggestContrastFixInput = z.infer<typeof suggestContrastFixSchema>;
+export type SuggestContrastFixInput = z.input<typeof suggestContrastFixSchema>;
 
-export function executeSuggestContrastFix(input: SuggestContrastFixInput) {
+export const executeSuggestContrastFix = (input: SuggestContrastFixInput) => {
   const fg = parseColor(input.foreground);
   const bg = parseColor(input.background);
+  const level = input.level ?? 'AA';
+  const textSize = input.textSize ?? 'normal';
   const currentRatio = roundRatio(contrastRatio(fg, bg));
-  const targetRatio = getRequiredRatio(input.level, input.textSize);
+  const targetRatio = getRequiredRatio(level, textSize);
 
   if (currentRatio >= targetRatio) {
     return {
-      status: 'already_passing',
+      status: 'already_passing' as const,
       original: {
         foreground: rgbToHex(fg),
         background: rgbToHex(bg),
         ratio: currentRatio,
       },
-      target: { level: input.level, textSize: input.textSize, required: targetRatio },
-      message: `The color pair already meets ${input.level} for ${input.textSize} text (${currentRatio} ≥ ${targetRatio}).`,
+      target: { level, textSize, required: targetRatio },
+      message: `The color pair already meets ${level} for ${textSize} text (${currentRatio} ≥ ${targetRatio}).`,
     };
   }
 
@@ -44,13 +41,13 @@ export function executeSuggestContrastFix(input: SuggestContrastFixInput) {
 
   if (!suggested) {
     return {
-      status: 'no_fix_found',
+      status: 'no_fix_found' as const,
       original: {
         foreground: rgbToHex(fg),
         background: rgbToHex(bg),
         ratio: currentRatio,
       },
-      target: { level: input.level, textSize: input.textSize, required: targetRatio },
+      target: { level, textSize, required: targetRatio },
       message: 'Could not find a suitable adjustment. Try changing the background color instead.',
     };
   }
@@ -59,7 +56,7 @@ export function executeSuggestContrastFix(input: SuggestContrastFixInput) {
   const colorDifference = Math.round(deltaE(fg, suggested) * 10) / 10;
 
   return {
-    status: 'fixed',
+    status: 'fixed' as const,
     original: {
       foreground: rgbToHex(fg),
       background: rgbToHex(bg),
@@ -70,7 +67,7 @@ export function executeSuggestContrastFix(input: SuggestContrastFixInput) {
       background: rgbToHex(bg),
       ratio: newRatio,
     },
-    target: { level: input.level, textSize: input.textSize, required: targetRatio },
+    target: { level, textSize, required: targetRatio },
     deltaE: colorDifference,
   };
-}
+};

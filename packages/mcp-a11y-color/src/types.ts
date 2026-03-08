@@ -1,34 +1,24 @@
-/**
- * Shared types for @weAAAre/mcp-a11y-color
- */
+export type RGBColor = {
+  r: number;
+  g: number;
+  b: number;
+};
 
-export interface RGBColor {
-  r: number; // 0–255
-  g: number; // 0–255
-  b: number; // 0–255
-}
+export type HSLColor = {
+  h: number;
+  s: number;
+  l: number;
+};
 
-export interface HSLColor {
-  h: number; // 0–360
-  s: number; // 0–100
-  l: number; // 0–100
-}
-
-export interface OklchColor {
-  l: number; // 0–1
-  c: number; // 0–0.4+
-  h: number; // 0–360
-}
-
-export interface ColorInfo {
+export type ColorInfo = {
   hex: string;
   rgb: RGBColor;
   hsl: HSLColor;
   relativeLuminance: number;
   isLight: boolean;
-}
+};
 
-export interface ContrastResult {
+export type ContrastResult = {
   ratio: number;
   level: {
     AA_normal: boolean;
@@ -37,7 +27,7 @@ export interface ContrastResult {
     AAA_large: boolean;
     AA_ui: boolean;
   };
-}
+};
 
 export type ColorBlindnessType =
   | 'protanopia'

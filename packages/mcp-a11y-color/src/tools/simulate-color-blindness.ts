@@ -1,12 +1,6 @@
-/**
- * simulate-color-blindness tool
- * Simulates how colors appear under different types of color vision deficiency.
- */
-
 import { z } from 'zod';
-import { deltaE, simulateAllTypes, simulateColorBlindness } from '../lib/color-blindness.js';
+import { deltaE, simulateColorBlindness } from '../lib/color-blindness.js';
 import { parseColor, rgbToHex } from '../lib/color-parser.js';
-import { contrastRatio, roundRatio } from '../lib/contrast.js';
 import type { ColorBlindnessType } from '../types.js';
 import { COLOR_BLINDNESS_TYPES } from '../types.js';
 
@@ -29,9 +23,9 @@ export const simulateColorBlindnessSchema = z.object({
     .describe('CVD type to simulate, or "all" for all 8 types (default: all)'),
 });
 
-export type SimulateColorBlindnessInput = z.infer<typeof simulateColorBlindnessSchema>;
+export type SimulateColorBlindnessInput = z.input<typeof simulateColorBlindnessSchema>;
 
-export function executeSimulateColorBlindness(input: SimulateColorBlindnessInput) {
+export const executeSimulateColorBlindness = (input: SimulateColorBlindnessInput) => {
   const parsedColors = input.colors.map((c) => ({
     original: c,
     rgb: parseColor(c),
@@ -88,4 +82,4 @@ export function executeSimulateColorBlindness(input: SimulateColorBlindnessInput
     simulations,
     warnings: warnings.length > 0 ? warnings : undefined,
   };
-}
+};

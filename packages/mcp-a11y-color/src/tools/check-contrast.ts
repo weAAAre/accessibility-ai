@@ -1,8 +1,3 @@
-/**
- * check-contrast tool
- * Calculates WCAG 2.2 contrast ratio between foreground and background colors.
- */
-
 import { z } from 'zod';
 import { parseColor, rgbToHex } from '../lib/color-parser.js';
 import { checkContrast, isLargeText } from '../lib/contrast.js';
@@ -20,9 +15,9 @@ export const checkContrastSchema = z.object({
     .describe('Font weight — "bold" lowers the large-text threshold to 14pt (18.5px)'),
 });
 
-export type CheckContrastInput = z.infer<typeof checkContrastSchema>;
+export type CheckContrastInput = z.input<typeof checkContrastSchema>;
 
-export function executeCheckContrast(input: CheckContrastInput) {
+export const executeCheckContrast = (input: CheckContrastInput) => {
   const fg = parseColor(input.foreground);
   const bg = parseColor(input.background);
   const result = checkContrast(fg, bg);
@@ -47,4 +42,4 @@ export function executeCheckContrast(input: CheckContrastInput) {
       wcag2_AA_ui: { required: 3, pass: result.level.AA_ui },
     },
   };
-}
+};

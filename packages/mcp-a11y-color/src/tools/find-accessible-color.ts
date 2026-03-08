@@ -1,9 +1,5 @@
-/**
- * find-accessible-color tool
- * Given a background color and target contrast ratio, finds a color that meets the requirement.
- */
-
 import { z } from 'zod';
+
 import { hslToRgb, parseColor, rgbToHex } from '../lib/color-parser.js';
 import { contrastRatio, roundRatio } from '../lib/contrast.js';
 import type { RGBColor } from '../types.js';
@@ -25,15 +21,15 @@ export const findAccessibleColorSchema = z.object({
     .describe('Desired hue angle (0–360). If omitted, returns a neutral gray.'),
 });
 
-export type FindAccessibleColorInput = z.infer<typeof findAccessibleColorSchema>;
+export type FindAccessibleColorInput = z.input<typeof findAccessibleColorSchema>;
 
-export function executeFindAccessibleColor(input: FindAccessibleColorInput) {
+export const executeFindAccessibleColor = (input: FindAccessibleColorInput) => {
   const bg = parseColor(input.background);
+  const targetRatio = input.targetRatio ?? 4.5;
   const results: { hex: string; ratio: number; hue: number | null; saturation: number }[] = [];
 
   if (input.hue === undefined) {
-    // Find neutral gray
-    const color = findGrayWithContrast(bg, input.targetRatio);
+    const color = findGrayWithContrast(bg, targetRatio);
     if (color) {
       results.push({
         hex: rgbToHex(color),
@@ -43,9 +39,8 @@ export function executeFindAccessibleColor(input: FindAccessibleColorInput) {
       });
     }
   } else {
-    // Find colors at the given hue with varying saturation
     for (const saturation of [80, 60, 40, 100]) {
-      const color = findColorWithContrast(bg, input.targetRatio, input.hue, saturation);
+      const color = findColorWithContrast(bg, targetRatio, input.hue, saturation);
       if (color) {
         const ratio = roundRatio(contrastRatio(color, bg));
         // Avoid duplicates
@@ -59,16 +54,16 @@ export function executeFindAccessibleColor(input: FindAccessibleColorInput) {
 
   return {
     background: rgbToHex(bg),
-    targetRatio: input.targetRatio,
+    targetRatio,
     suggestedColors: results.slice(0, 4),
     note:
       results.length === 0
-        ? `Could not find a color with contrast ratio ≥ ${input.targetRatio} at the requested hue.`
+        ? `Could not find a color with contrast ratio ≥ ${targetRatio} at the requested hue.`
         : undefined,
   };
-}
+};
 
-function findGrayWithContrast(bg: RGBColor, targetRatio: number): RGBColor | null {
+const findGrayWithContrast = (bg: RGBColor, targetRatio: number): RGBColor | null => {
   // Binary search through gray values
   for (let i = 0; i <= 255; i++) {
     const candidate: RGBColor = { r: i, g: i, b: i };
@@ -84,14 +79,14 @@ function findGrayWithContrast(bg: RGBColor, targetRatio: number): RGBColor | nul
     }
   }
   return null;
-}
+};
 
-function findColorWithContrast(
+const findColorWithContrast = (
   bg: RGBColor,
   targetRatio: number,
   hue: number,
   saturation: number,
-): RGBColor | null {
+): RGBColor | null => {
   // Search through lightness values
   let bestColor: RGBColor | null = null;
   let bestDiff = Number.POSITIVE_INFINITY;
@@ -110,4 +105,4 @@ function findColorWithContrast(
   }
 
   return bestColor;
-}
+};

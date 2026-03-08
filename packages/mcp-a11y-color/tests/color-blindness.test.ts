@@ -1,46 +1,21 @@
 import { describe, expect, it } from '@rstest/core';
+
 import { deltaE, simulateAllTypes, simulateColorBlindness } from '../src/lib/color-blindness.js';
+import { rgbToHex } from '../src/lib/color-parser.js';
+
 import type { ColorBlindnessType, RGBColor } from '../src/types.js';
 import { COLOR_BLINDNESS_TYPES } from '../src/types.js';
 
-// ─── simulateColorBlindness ──────────────────────────────────────────────────
-
-describe('simulateColorBlindness', () => {
-  const red: RGBColor = { r: 255, g: 0, b: 0 };
-  const green: RGBColor = { r: 0, g: 255, b: 0 };
-  const blue: RGBColor = { r: 0, g: 0, b: 255 };
-  const white: RGBColor = { r: 255, g: 255, b: 255 };
-  const black: RGBColor = { r: 0, g: 0, b: 0 };
-
-  it('returns valid RGB values (0–255) for all CVD types', () => {
+describe('simulateColorBlindness — invariants', () => {
+  it('black remains black under all 8 CVD types', () => {
+    const black: RGBColor = { r: 0, g: 0, b: 0 };
     for (const type of COLOR_BLINDNESS_TYPES) {
-      const result = simulateColorBlindness(red, type);
-      expect(result.r).toBeGreaterThanOrEqual(0);
-      expect(result.r).toBeLessThanOrEqual(255);
-      expect(result.g).toBeGreaterThanOrEqual(0);
-      expect(result.g).toBeLessThanOrEqual(255);
-      expect(result.b).toBeGreaterThanOrEqual(0);
-      expect(result.b).toBeLessThanOrEqual(255);
+      expect(simulateColorBlindness(black, type)).toEqual({ r: 0, g: 0, b: 0 });
     }
   });
 
-  it('achromatopsia produces grayscale output', () => {
-    const result = simulateColorBlindness(red, 'achromatopsia');
-    // All channels should be equal (or very close, due to rounding)
-    expect(Math.abs(result.r - result.g)).toBeLessThanOrEqual(1);
-    expect(Math.abs(result.g - result.b)).toBeLessThanOrEqual(1);
-  });
-
-  it('black stays black for all types', () => {
-    for (const type of COLOR_BLINDNESS_TYPES) {
-      const result = simulateColorBlindness(black, type);
-      expect(result.r).toBe(0);
-      expect(result.g).toBe(0);
-      expect(result.b).toBe(0);
-    }
-  });
-
-  it('white stays white (or very close) for all types', () => {
+  it('white remains white (±2) under all 8 CVD types', () => {
+    const white: RGBColor = { r: 255, g: 255, b: 255 };
     for (const type of COLOR_BLINDNESS_TYPES) {
       const result = simulateColorBlindness(white, type);
       expect(result.r).toBeGreaterThanOrEqual(253);
@@ -49,19 +24,85 @@ describe('simulateColorBlindness', () => {
     }
   });
 
+  it('all outputs are clamped to 0–255', () => {
+    const extremes: RGBColor[] = [
+      { r: 255, g: 0, b: 0 },
+      { r: 0, g: 255, b: 0 },
+      { r: 0, g: 0, b: 255 },
+      { r: 255, g: 255, b: 0 },
+      { r: 0, g: 255, b: 255 },
+      { r: 255, g: 0, b: 255 },
+      { r: 255, g: 255, b: 255 },
+      { r: 0, g: 0, b: 0 },
+    ];
+    for (const color of extremes) {
+      for (const type of COLOR_BLINDNESS_TYPES) {
+        const r = simulateColorBlindness(color, type);
+        expect(r.r).toBeGreaterThanOrEqual(0);
+        expect(r.r).toBeLessThanOrEqual(255);
+        expect(r.g).toBeGreaterThanOrEqual(0);
+        expect(r.g).toBeLessThanOrEqual(255);
+        expect(r.b).toBeGreaterThanOrEqual(0);
+        expect(r.b).toBeLessThanOrEqual(255);
+      }
+    }
+  });
+
+  it('outputs are integer RGB values', () => {
+    for (const type of COLOR_BLINDNESS_TYPES) {
+      const result = simulateColorBlindness({ r: 123, g: 45, b: 67 }, type);
+      expect(Number.isInteger(result.r)).toBe(true);
+      expect(Number.isInteger(result.g)).toBe(true);
+      expect(Number.isInteger(result.b)).toBe(true);
+    }
+  });
+
+  it('achromatopsia produces grayscale for any input', () => {
+    const colors: RGBColor[] = [
+      { r: 255, g: 0, b: 0 },
+      { r: 0, g: 255, b: 0 },
+      { r: 0, g: 0, b: 255 },
+      { r: 200, g: 100, b: 50 },
+      { r: 128, g: 64, b: 192 },
+    ];
+    for (const c of colors) {
+      const r = simulateColorBlindness(c, 'achromatopsia');
+      expect(Math.abs(r.r - r.g)).toBeLessThanOrEqual(1);
+      expect(Math.abs(r.g - r.b)).toBeLessThanOrEqual(1);
+    }
+  });
+
+  it('anomalous trichromats shift LESS than corresponding dichromats', () => {
+    const pairs: [ColorBlindnessType, ColorBlindnessType][] = [
+      ['protanopia', 'protanomaly'],
+      ['deuteranopia', 'deuteranomaly'],
+      ['tritanopia', 'tritanomaly'],
+      ['achromatopsia', 'achromatomaly'],
+    ];
+    const testColor: RGBColor = { r: 255, g: 0, b: 0 };
+    for (const [dichromat, anomalous] of pairs) {
+      const dich = simulateColorBlindness(testColor, dichromat);
+      const anom = simulateColorBlindness(testColor, anomalous);
+      const dichDist = Math.abs(255 - dich.r) + Math.abs(0 - dich.g) + Math.abs(0 - dich.b);
+      const anomDist = Math.abs(255 - anom.r) + Math.abs(0 - anom.g) + Math.abs(0 - anom.b);
+      expect(anomDist).toBeLessThanOrEqual(dichDist);
+    }
+  });
+});
+
+describe('simulateColorBlindness — behavioral', () => {
   it('protanopia shifts red toward yellow/brown', () => {
-    const result = simulateColorBlindness(red, 'protanopia');
-    // Under protanopia, pure red loses red perception — green should be > 0
+    const result = simulateColorBlindness({ r: 255, g: 0, b: 0 }, 'protanopia');
     expect(result.g).toBeGreaterThan(0);
-    // Blue should remain low
     expect(result.b).toBeLessThan(30);
   });
 
   it('deuteranopia makes red and green more similar', () => {
+    const red: RGBColor = { r: 255, g: 0, b: 0 };
+    const green: RGBColor = { r: 0, g: 255, b: 0 };
     const simRed = simulateColorBlindness(red, 'deuteranopia');
     const simGreen = simulateColorBlindness(green, 'deuteranopia');
-    // Under deuteranopia, red and green should be closer than under normal vision
-    const normalDist = Math.sqrt(255 ** 2 + 255 ** 2); // max difference
+    const normalDist = Math.sqrt(255 ** 2 + 255 ** 2);
     const simDist = Math.sqrt(
       (simRed.r - simGreen.r) ** 2 + (simRed.g - simGreen.g) ** 2 + (simRed.b - simGreen.b) ** 2,
     );
@@ -69,24 +110,46 @@ describe('simulateColorBlindness', () => {
   });
 
   it('tritanopia primarily affects blue-yellow axis', () => {
-    const result = simulateColorBlindness(blue, 'tritanopia');
-    // Under tritanopia, pure blue shifts significantly
-    // Blue channel should be reduced
+    const result = simulateColorBlindness({ r: 0, g: 0, b: 255 }, 'tritanopia');
     expect(result.b).toBeLessThan(200);
-  });
-
-  it('anomalous types produce less extreme shifts than corresponding dichromats', () => {
-    // Protanomaly should shift less than protanopia
-    const dichromat = simulateColorBlindness(red, 'protanopia');
-    const anomalous = simulateColorBlindness(red, 'protanomaly');
-    // Anomalous result should be closer to original red
-    const dichDist = Math.abs(255 - dichromat.r) + Math.abs(dichromat.g) + Math.abs(dichromat.b);
-    const anoDist = Math.abs(255 - anomalous.r) + Math.abs(anomalous.g) + Math.abs(anomalous.b);
-    expect(anoDist).toBeLessThanOrEqual(dichDist);
   });
 });
 
-// ─── simulateAllTypes ────────────────────────────────────────────────────────
+describe('color blindness known outputs — pure red #FF0000', () => {
+  const red: RGBColor = { r: 255, g: 0, b: 0 };
+
+  it('protanopia → #c6c500', () => {
+    expect(rgbToHex(simulateColorBlindness(red, 'protanopia'))).toBe('#c6c500');
+  });
+
+  it('protanomaly → #e99c00', () => {
+    expect(rgbToHex(simulateColorBlindness(red, 'protanomaly'))).toBe('#e99c00');
+  });
+
+  it('deuteranopia → #cfda00', () => {
+    expect(rgbToHex(simulateColorBlindness(red, 'deuteranopia'))).toBe('#cfda00');
+  });
+
+  it('deuteranomaly → #e78b00', () => {
+    expect(rgbToHex(simulateColorBlindness(red, 'deuteranomaly'))).toBe('#e78b00');
+  });
+
+  it('tritanopia → #f90000', () => {
+    expect(rgbToHex(simulateColorBlindness(red, 'tritanopia'))).toBe('#f90000');
+  });
+
+  it('tritanomaly → #fb0000', () => {
+    expect(rgbToHex(simulateColorBlindness(red, 'tritanomaly'))).toBe('#fb0000');
+  });
+
+  it('achromatopsia → #959595', () => {
+    expect(rgbToHex(simulateColorBlindness(red, 'achromatopsia'))).toBe('#959595');
+  });
+
+  it('achromatomaly → #ce7070', () => {
+    expect(rgbToHex(simulateColorBlindness(red, 'achromatomaly'))).toBe('#ce7070');
+  });
+});
 
 describe('simulateAllTypes', () => {
   it('returns all 8 CVD types', () => {
@@ -103,28 +166,26 @@ describe('simulateAllTypes', () => {
     const color: RGBColor = { r: 150, g: 75, b: 200 };
     const allResults = simulateAllTypes(color);
     for (const type of COLOR_BLINDNESS_TYPES) {
-      const individual = simulateColorBlindness(color, type);
-      expect(allResults[type]).toEqual(individual);
+      expect(allResults[type]).toEqual(simulateColorBlindness(color, type));
     }
   });
 });
 
-// ─── deltaE ──────────────────────────────────────────────────────────────────
-
 describe('deltaE', () => {
-  it('returns 0 for identical colors', () => {
-    const color: RGBColor = { r: 128, g: 64, b: 200 };
-    expect(deltaE(color, color)).toBe(0);
+  it('identical colors → 0', () => {
+    expect(deltaE({ r: 128, g: 64, b: 200 }, { r: 128, g: 64, b: 200 })).toBe(0);
   });
 
-  it('returns high value for black vs white', () => {
-    const de = deltaE({ r: 0, g: 0, b: 0 }, { r: 255, g: 255, b: 255 });
-    expect(de).toBeGreaterThan(90);
+  it('black vs white → very high (> 90)', () => {
+    expect(deltaE({ r: 0, g: 0, b: 0 }, { r: 255, g: 255, b: 255 })).toBeGreaterThan(90);
   });
 
-  it('returns low value for similar colors', () => {
-    const de = deltaE({ r: 100, g: 100, b: 100 }, { r: 102, g: 100, b: 101 });
-    expect(de).toBeLessThan(5);
+  it('similar grays → low (< 5)', () => {
+    expect(deltaE({ r: 100, g: 100, b: 100 }, { r: 102, g: 100, b: 101 })).toBeLessThan(5);
+  });
+
+  it('red vs green → large difference (> 50)', () => {
+    expect(deltaE({ r: 255, g: 0, b: 0 }, { r: 0, g: 255, b: 0 })).toBeGreaterThan(50);
   });
 
   it('is commutative', () => {
@@ -133,13 +194,33 @@ describe('deltaE', () => {
     expect(deltaE(a, b)).toBeCloseTo(deltaE(b, a), 10);
   });
 
-  it('red vs green has a large difference', () => {
-    const de = deltaE({ r: 255, g: 0, b: 0 }, { r: 0, g: 255, b: 0 });
-    expect(de).toBeGreaterThan(50);
+  it('is non-negative', () => {
+    const pairs: [RGBColor, RGBColor][] = [
+      [
+        { r: 50, g: 100, b: 150 },
+        { r: 200, g: 50, b: 80 },
+      ],
+      [
+        { r: 0, g: 0, b: 0 },
+        { r: 0, g: 0, b: 1 },
+      ],
+      [
+        { r: 255, g: 255, b: 255 },
+        { r: 254, g: 254, b: 254 },
+      ],
+    ];
+    for (const [a, b] of pairs) {
+      expect(deltaE(a, b)).toBeGreaterThanOrEqual(0);
+    }
   });
 
-  it('returns non-negative values', () => {
-    const de = deltaE({ r: 50, g: 100, b: 150 }, { r: 200, g: 50, b: 80 });
-    expect(de).toBeGreaterThan(0);
+  it('triangle inequality holds (approximate)', () => {
+    const a: RGBColor = { r: 255, g: 0, b: 0 };
+    const b: RGBColor = { r: 0, g: 255, b: 0 };
+    const c: RGBColor = { r: 0, g: 0, b: 255 };
+    const dAB = deltaE(a, b);
+    const dBC = deltaE(b, c);
+    const dAC = deltaE(a, c);
+    expect(dAC).toBeLessThanOrEqual(dAB + dBC + 0.01);
   });
 });
