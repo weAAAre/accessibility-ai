@@ -34,7 +34,7 @@ import {
 
 const server = new McpServer({
   name: '@weaaare/mcp-a11y-color',
-  version: '0.0.1',
+  version: '0.0.2',
 });
 
 server.tool(

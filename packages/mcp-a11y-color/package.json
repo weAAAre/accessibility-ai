@@ -1,6 +1,6 @@
 {
   "name": "@weaaare/mcp-a11y-color",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "MCP server for color accessibility — contrast checking, color blindness simulation, palette analysis, and WCAG 2.2 compliance",
   "license": "MIT",
   "type": "module",
