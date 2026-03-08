@@ -1,5 +1,5 @@
 {
-  "name": "@weAAAre/mcp-a11y-color",
+  "name": "@weaaare/mcp-a11y-color",
   "version": "0.0.1",
   "description": "MCP server for color accessibility — contrast checking, color blindness simulation, palette analysis, and WCAG 2.2 compliance",
   "license": "MIT",
@@ -43,7 +43,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/weAAAre/accessibility-skills",
+    "url": "git+https://github.com/weAAAre/accessibility-skills.git",
     "directory": "packages/mcp-a11y-color"
   },
   "homepage": "https://github.com/weAAAre/accessibility-skills/tree/main/packages/mcp-a11y-color#readme",

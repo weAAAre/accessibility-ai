@@ -1,4 +1,4 @@
-# @weAAAre/mcp-a11y-color
+# @weaaare/mcp-a11y-color
 
 MCP (Model Context Protocol) server for **color accessibility**. Gives AI coding agents the ability to verify, simulate, and suggest accessible colors in real-time while writing code.
 
@@ -22,13 +22,13 @@ Covers **WCAG 2.2** (SC 1.4.1, 1.4.3, 1.4.6, 1.4.11, 2.4.7) criteria.
 ## Installation
 
 ```bash
-npm install -g @weAAAre/mcp-a11y-color
+npm install -g @weaaare/mcp-a11y-color
 ```
 
 Or use directly with `npx`:
 
 ```bash
-npx @weAAAre/mcp-a11y-color
+npx @weaaare/mcp-a11y-color
 ```
 
 ## Configuration
@@ -42,7 +42,7 @@ Add to `.vscode/mcp.json`:
   "servers": {
     "a11y-color": {
       "command": "npx",
-      "args": ["-y", "@weAAAre/mcp-a11y-color"]
+      "args": ["-y", "@weaaare/mcp-a11y-color"]
     }
   }
 }
@@ -57,7 +57,7 @@ Add to `claude_desktop_config.json`:
   "mcpServers": {
     "a11y-color": {
       "command": "npx",
-      "args": ["-y", "@weAAAre/mcp-a11y-color"]
+      "args": ["-y", "@weaaare/mcp-a11y-color"]
     }
   }
 }

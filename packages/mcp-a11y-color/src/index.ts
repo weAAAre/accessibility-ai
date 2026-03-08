@@ -33,7 +33,7 @@ import {
 } from './tools/suggest-contrast-fix.js';
 
 const server = new McpServer({
-  name: '@weAAAre/mcp-a11y-color',
+  name: '@weaaare/mcp-a11y-color',
   version: '0.0.1',
 });
 

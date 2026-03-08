@@ -13,7 +13,7 @@ body:
       label: Package / Skill
       description: Which package or skill is affected?
       options:
-        - "@weAAAre/mcp-a11y-color"
+        - "@weaaare/mcp-a11y-color"
         - "skill: wcag-compliance"
         - "Other"
     validations:

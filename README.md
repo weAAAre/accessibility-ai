@@ -17,7 +17,7 @@ Model Context Protocol servers that give AI assistants programmatic accessibilit
 
 | Package | Description | Install |
 |---------|-------------|---------|
-| [`@weAAAre/mcp-a11y-color`](./packages/mcp-a11y-color/) | Contrast checking, color-blindness simulation, WCAG 2.2 color compliance | `npx @weAAAre/mcp-a11y-color` |
+| [`@weaaare/mcp-a11y-color`](./packages/mcp-a11y-color/) | Contrast checking, color-blindness simulation, WCAG 2.2 color compliance | `npx @weaaare/mcp-a11y-color` |
 
 ### 🧠 Agent Skills (`skills/`)
 
@@ -52,7 +52,7 @@ Add to your MCP client configuration:
   "mcpServers": {
     "mcp-a11y-color": {
       "command": "npx",
-      "args": ["-y", "@weAAAre/mcp-a11y-color"]
+      "args": ["-y", "@weaaare/mcp-a11y-color"]
     }
   }
 }
@@ -60,7 +60,7 @@ Add to your MCP client configuration:
 
 ---
 
-## MCP tools — `@weAAAre/mcp-a11y-color`
+## MCP tools — `@weaaare/mcp-a11y-color`
 
 | Tool | Description |
 |------|-------------|
