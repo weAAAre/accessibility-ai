@@ -1,4 +1,4 @@
-# Contributing to accessibility-skills
+# Contributing to accessibility-ai
 
 Thanks for your interest in contributing! This project is maintained by [weAAAre](https://weAAAre.com), a digital accessibility school.
 
@@ -12,8 +12,8 @@ Thanks for your interest in contributing! This project is maintained by [weAAAre
 ### Setup
 
 ```bash
-git clone https://github.com/weAAAre/accessibility-skills.git
-cd accessibility-skills
+git clone https://github.com/weAAAre/accessibility-ai.git
+cd accessibility-ai
 pnpm install   # also runs `lefthook install` via the prepare script
 pnpm build
 ```
@@ -60,7 +60,7 @@ Instructions for the agent...
 
 3. The `name` field **must match** the directory name
 4. Keep `SKILL.md` under 500 lines — move detailed content to `references/`
-5. Test with: `npx skills add weAAAre/accessibility-skills@your-skill-name --list`
+5. Test with: `npx skills add weAAAre/accessibility-ai@your-skill-name --list`
 
 ## Adding a new MCP tool
 

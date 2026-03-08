@@ -1,8 +1,8 @@
-# accessibility-skills
+# accessibility-ai
 
 > Accessibility tools and agent skills for AI coding agents — by [weAAAre](https://weAAAre.com), the digital accessibility school.
 
-[![CI](https://github.com/weAAAre/accessibility-skills/actions/workflows/ci.yml/badge.svg)](https://github.com/weAAAre/accessibility-skills/actions/workflows/ci.yml)
+[![CI](https://github.com/weAAAre/accessibility-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/weAAAre/accessibility-ai/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Node >= 24](https://img.shields.io/badge/node-%3E%3D24-brightgreen)](https://nodejs.org/)
 [![pnpm](https://img.shields.io/badge/pnpm-9-orange)](https://pnpm.io/)
@@ -25,7 +25,7 @@ Reusable procedural knowledge for AI coding agents, distributed via [skills.sh](
 
 | Skill | Description | Install |
 |-------|-------------|---------|
-| [`aria-patterns`](./skills/aria-patterns/) | Accessible ARIA patterns for interactive UI components | `npx skills add weAAAre/accessibility-skills@aria-patterns` |
+| [`aria-patterns`](./skills/aria-patterns/) | Accessible ARIA patterns for interactive UI components | `npx skills add weAAAre/accessibility-ai@aria-patterns` |
 
 ---
 
@@ -34,13 +34,13 @@ Reusable procedural knowledge for AI coding agents, distributed via [skills.sh](
 ### Install all skills
 
 ```bash
-npx skills add weAAAre/accessibility-skills
+npx skills add weAAAre/accessibility-ai
 ```
 
 ### Install a specific skill
 
 ```bash
-npx skills add weAAAre/accessibility-skills@aria-patterns
+npx skills add weAAAre/accessibility-ai@aria-patterns
 ```
 
 ### Use an MCP server (Claude Desktop, VS Code, etc.)
@@ -87,8 +87,8 @@ Add to your MCP client configuration:
 ### Setup
 
 ```bash
-git clone https://github.com/weAAAre/accessibility-skills.git
-cd accessibility-skills
+git clone https://github.com/weAAAre/accessibility-ai.git
+cd accessibility-ai
 pnpm install
 pnpm build
 ```

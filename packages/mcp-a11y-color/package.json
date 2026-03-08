@@ -43,12 +43,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/weAAAre/accessibility-skills.git",
+    "url": "git+https://github.com/weAAAre/accessibility-ai.git",
     "directory": "packages/mcp-a11y-color"
   },
-  "homepage": "https://github.com/weAAAre/accessibility-skills/tree/main/packages/mcp-a11y-color#readme",
+  "homepage": "https://github.com/weAAAre/accessibility-ai/tree/main/packages/mcp-a11y-color#readme",
   "bugs": {
-    "url": "https://github.com/weAAAre/accessibility-skills/issues"
+    "url": "https://github.com/weAAAre/accessibility-ai/issues"
   },
   "author": "weAAAre <hola@weAAAre.com> (https://weAAAre.com)",
   "engines": {
