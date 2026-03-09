@@ -25,8 +25,8 @@ catalogs:
       specifier: 1.27.1
       version: 1.27.1
     '@rstest/core':
-      specifier: 0.9.0
-      version: 0.9.0
+      specifier: 0.9.1
+      version: 0.9.1
     '@types/node':
       specifier: 25.3.5
       version: 25.3.5
@@ -43,8 +43,8 @@ catalogs:
       specifier: 5.9.3
       version: 5.9.3
     zod:
-      specifier: 3.25.76
-      version: 3.25.76
+      specifier: 4.3.6
+      version: 4.3.6
 
 importers:
 
@@ -79,26 +79,26 @@ importers:
     devDependencies:
       '@rstest/core':
         specifier: 'catalog:'
-        version: 0.9.0(core-js@3.45.1)
+        version: 0.9.1(core-js@3.45.1)
 
   packages/mcp-a11y-color:
     dependencies:
       '@modelcontextprotocol/sdk':
         specifier: 'catalog:'
-        version: 1.27.1(zod@3.25.76)
+        version: 1.27.1(zod@4.3.6)
       color2k:
         specifier: 'catalog:'
         version: 2.0.3
       zod:
         specifier: 'catalog:'
-        version: 3.25.76
+        version: 4.3.6
     devDependencies:
       '@biomejs/biome':
         specifier: 'catalog:'
         version: 2.4.6
       '@rstest/core':
         specifier: 'catalog:'
-        version: 0.9.0(core-js@3.45.1)
+        version: 0.9.1(core-js@3.45.1)
       '@types/node':
         specifier: 'catalog:'
         version: 25.3.5
@@ -429,8 +429,8 @@ packages:
       '@swc/helpers':
         optional: true
 
-  '@rstest/core@0.9.0':
-    resolution: {integrity: sha512-YL0TlUUMDgSF3uZ9ZiaqJokST7x+Zlou/FsMDk62CfOuNGUt2jGEt+wH7iZ9h2PJCUmj/e47uAFtjpqY8NeoOA==}
+  '@rstest/core@0.9.1':
+    resolution: {integrity: sha512-MxOVLsEagboFTqQrqyLn+wsjFa7RL8NF5sngZPAxmf+lWUsL/hzBmYeAwPwmDKKbj4iug9idQvlgkqQR6X15gQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
@@ -1375,8 +1375,8 @@ packages:
     peerDependencies:
       zod: ^3.25 || ^4
 
-  zod@3.25.76:
-    resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
+  zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
 
 snapshots:
 
@@ -1720,7 +1720,7 @@ snapshots:
       globby: 11.1.0
       read-yaml-file: 1.1.0
 
-  '@modelcontextprotocol/sdk@1.27.1(zod@3.25.76)':
+  '@modelcontextprotocol/sdk@1.27.1(zod@4.3.6)':
     dependencies:
       '@hono/node-server': 1.19.10(hono@4.12.5)
       ajv: 8.18.0
@@ -1737,8 +1737,8 @@ snapshots:
       json-schema-typed: 8.0.2
       pkce-challenge: 5.0.1
       raw-body: 3.0.2
-      zod: 3.25.76
-      zod-to-json-schema: 3.25.1(zod@3.25.76)
+      zod: 4.3.6
+      zod-to-json-schema: 3.25.1(zod@4.3.6)
     transitivePeerDependencies:
       - supports-color
 
@@ -1821,7 +1821,7 @@ snapshots:
     optionalDependencies:
       '@swc/helpers': 0.5.19
 
-  '@rstest/core@0.9.0(core-js@3.45.1)':
+  '@rstest/core@0.9.1(core-js@3.45.1)':
     dependencies:
       '@rsbuild/core': 2.0.0-beta.7(core-js@3.45.1)
       '@types/chai': 5.2.3
@@ -2677,8 +2677,8 @@ snapshots:
       y18n: 5.0.8
       yargs-parser: 21.1.1
 
-  zod-to-json-schema@3.25.1(zod@3.25.76):
+  zod-to-json-schema@3.25.1(zod@4.3.6):
     dependencies:
-      zod: 3.25.76
+      zod: 4.3.6
 
-  zod@3.25.76: {}
+  zod@4.3.6: {}
