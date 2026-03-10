@@ -1,4 +1,4 @@
-import { exec, execSync } from 'node:child_process';
+import { exec } from 'node:child_process';
 import { macOSActivate } from '@guidepup/guidepup';
 
 export interface ActiveApplicationInfo {
