@@ -18,6 +18,7 @@ Model Context Protocol servers that give AI assistants programmatic accessibilit
 | Package | Description | Install |
 |---------|-------------|---------|
 | [`@weaaare/mcp-a11y-color`](./packages/mcp-a11y-color/) | Contrast checking, color-blindness simulation, WCAG 2.2 color compliance | `npx @weaaare/mcp-a11y-color` |
+| [`@weaaare/mcp-voiceover-auditor`](./packages/mcp-voiceover-auditor/) | Automates accessibility audits using voiceover | `npx @weaaare/mcp-voiceover-auditor` |
 
 ### 🧠 Agent Skills (`skills/`)
 
@@ -53,6 +54,10 @@ Add to your MCP client configuration:
     "mcp-a11y-color": {
       "command": "npx",
       "args": ["-y", "@weaaare/mcp-a11y-color"]
+    },
+    "mcp-voiceover-auditor": {
+      "command": "npx",
+      "args": ["-y", "@weaaare/mcp-voiceover-auditor"]
     }
   }
 }
@@ -74,6 +79,27 @@ Add to your MCP client configuration:
 | `analyze-palette-contrast` | N×N contrast matrix for a set of colors — design system audits |
 | `generate-cvd-safe-palette` | Generate a palette distinguishable under all CVD types |
 | `analyze-design-tokens` | Audit design tokens for WCAG compliance with automatic fixes |
+
+## MCP tools - `@weaaare/mcp-voiceover-auditor`
+
+| Tool | Description |
+|------|-------------|
+| `check_setup` | Verify VoiceOver environment setup (AppleScript, OS support, screen reader readiness) |
+| `voiceover_start` | Start VoiceOver before running navigation and audit commands |
+| `voiceover_stop` | Stop VoiceOver and clean up the session |
+| `voiceover_commander` | Execute native VoiceOver commander commands for reliable navigation |
+| `voiceover_perform` | Execute keyboard-driven VoiceOver navigation commands |
+| `voiceover_item_text` | Read current focused item text announced by VoiceOver |
+| `voiceover_last_spoken_phrase` | Get the latest spoken output from VoiceOver |
+| `focus_ensure_browser` | Ensure browser is focused before audit navigation |
+| `focus_record` | Record focus breadcrumbs for recovery during audits |
+| `focus_last_known` | Recover last known focus position if context is lost |
+| `start_audit` | Start a structured audit session with metadata |
+| `log_finding` | Log violations/warnings/passes with WCAG criteria and recommendations |
+| `get_audit_status` | Get current audit progress and finding counters |
+| `get_findings` | Retrieve findings from current or latest session |
+| `end_audit` | End audit session and return summary data |
+| `generate_report` | Generate reports in Markdown, JSON, or CSV |
 
 ---
 
