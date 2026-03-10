@@ -9,10 +9,14 @@ export class ApplicationManager {
   async getActiveApplication(): Promise<ActiveApplicationInfo> {
     const script =
       'tell application "System Events" to get name of first application process whose frontmost is true';
-    const name = execSync(`osascript -e '${script}'`, {
-      encoding: 'utf-8',
-    }).trim();
-    return { name };
+    return new Promise((resolve, reject) => {
+      exec(`osascript -e '${script}'`, { encoding: 'utf-8' }, (error, stdout) => {
+        if (error) {
+          return reject(error);
+        }
+        resolve({ name: stdout.trim() });
+      });
+    });
   }
 
   async activateApplication(applicationName: string): Promise<void> {
