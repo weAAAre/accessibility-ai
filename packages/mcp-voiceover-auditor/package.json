@@ -20,8 +20,10 @@
     "test": "rstest --passWithNoTests"
   },
   "dependencies": {
+    "@guidepup/guidepup": "catalog:",
+    "@guidepup/virtual-screen-reader": "^0.32.1",
     "@modelcontextprotocol/sdk": "catalog:",
-    "@guidepup/guidepup": "catalog:"
+    "playwright-core": "^1.58.2"
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",

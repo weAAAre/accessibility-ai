@@ -16,6 +16,8 @@ import { createNavigationTools } from './navigation/navigation.tools.js';
 import { getPromptMessages, listPrompts } from './prompts/audit-prompts.js';
 import { createReportTools } from './reports/report.tools.js';
 import { listResources, readResource } from './resources/audit-resources.js';
+import { VirtualScreenReaderAdapter } from './screen-readers/virtual/virtual.adapter.js';
+import { createVirtualTools } from './screen-readers/virtual/virtual.tools.js';
 import { VoiceOverAdapter } from './screen-readers/voiceover/voiceover.adapter.js';
 import { createVoiceOverTools } from './screen-readers/voiceover/voiceover.tools.js';
 import { createSetupTools } from './setup/setup-check.tools.js';
@@ -38,6 +40,7 @@ export function createServer(): Server {
 
   // --- Instantiate dependencies ---
   const voiceOverAdapter = new VoiceOverAdapter();
+  const virtualAdapter = new VirtualScreenReaderAdapter();
   const appManager = new ApplicationManager();
   const focusTracker = new FocusTracker();
   const auditSession = new AuditSession();
@@ -45,6 +48,7 @@ export function createServer(): Server {
   // --- Register tool modules ---
   const registry = new ToolRegistry();
   registry.register(createVoiceOverTools(voiceOverAdapter));
+  registry.register(createVirtualTools(virtualAdapter));
   registry.register(createNavigationTools(appManager, focusTracker));
   registry.register(createSetupTools(voiceOverAdapter));
   registry.register(createAuditTools(auditSession));
