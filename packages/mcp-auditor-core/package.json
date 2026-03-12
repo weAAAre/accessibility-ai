@@ -1,0 +1,33 @@
+{
+  "name": "@weaaare/mcp-auditor-core",
+  "version": "0.0.1",
+  "description": "Shared core for screen reader accessibility audit MCP servers — audit sessions, findings, reports, tool registry",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "check-types": "tsc --noEmit",
+    "lint": "biome check .",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "catalog:"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@rstest/core": "catalog:",
+    "@types/node": "catalog:",
+    "@weaaare/config": "workspace:*",
+    "typescript": "catalog:"
+  },
+  "author": "weAAAre <hola@weAAAre.com> (https://weAAAre.com)",
+  "engines": {
+    "node": ">=24"
+  }
+}

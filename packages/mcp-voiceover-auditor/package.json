@@ -1,0 +1,57 @@
+{
+  "name": "@weaaare/mcp-voiceover-auditor",
+  "version": "0.0.1",
+  "description": "MCP server for voiceover accessibility auditing — analyzing and improving screen reader output for better accessibility",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "mcp-voiceover-auditor": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "check-types": "tsc --noEmit",
+    "lint": "biome check .",
+    "dev": "tsc --watch",
+    "test": "rstest --passWithNoTests"
+  },
+  "dependencies": {
+    "@guidepup/guidepup": "catalog:",
+    "@modelcontextprotocol/sdk": "catalog:",
+    "@weaaare/mcp-auditor-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@rstest/core": "catalog:",
+    "@types/node": "catalog:",
+    "@weaaare/config": "workspace:*",
+    "typescript": "catalog:"
+  },
+  "keywords": [
+    "mcp",
+    "accessibility",
+    "a11y",
+    "voiceover",
+    "screen-reader",
+    "macos",
+    "a11y",
+    "wcag"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weAAAre/accessibility-ai.git",
+    "directory": "packages/mcp-voiceover-auditor"
+  },
+  "homepage": "https://github.com/weAAAre/accessibility-ai/tree/main/packages/mcp-voiceover-auditor#readme",
+  "bugs": {
+    "url": "https://github.com/weAAAre/accessibility-ai/issues"
+  },
+  "author": "weAAAre <hola@weAAAre.com> (https://weAAAre.com)",
+  "engines": {
+    "node": ">=24"
+  }
+}
