@@ -16,42 +16,26 @@ import {
   ToolRegistry,
 } from '@weaaare/mcp-auditor-core';
 import packageVersion from '../package.json' with { type: 'json' };
-import { ApplicationManager } from './navigation/application-manager.js';
-import { FocusTracker } from './navigation/focus-tracker.js';
-import { createNavigationTools } from './navigation/navigation.tools.js';
-import { getVoiceOverPromptMessages, listVoiceOverPrompts } from './prompts/audit-prompts.js';
-import { VoiceOverAdapter } from './screen-readers/voiceover/voiceover.adapter.js';
-import { createVoiceOverTools } from './screen-readers/voiceover/voiceover.tools.js';
-import { createSetupTools } from './setup/setup-check.tools.js';
+import { getVirtualPromptMessages, listVirtualPrompts } from './prompts/virtual-prompts.js';
+import { VirtualScreenReaderAdapter } from './screen-readers/virtual/virtual.adapter.js';
+import { createVirtualTools } from './screen-readers/virtual/virtual.tools.js';
 
-export function createServer(): Server {
+export const createServer = (): Server => {
   const server = new Server(
     {
-      name: 'mcp-voiceover-auditor',
+      name: 'mcp-virtual-screen-reader-auditor',
       version: packageVersion.version,
     },
-    {
-      capabilities: {
-        tools: {},
-        prompts: {},
-        resources: {},
-      },
-    },
+    { capabilities: { tools: {}, prompts: {}, resources: {} } },
   );
 
-  // --- Instantiate dependencies ---
-  const voiceOverAdapter = new VoiceOverAdapter();
-  const appManager = new ApplicationManager();
-  const focusTracker = new FocusTracker();
-  const auditSession = new AuditSession();
-
-  // --- Register tool modules ---
+  const adapter = new VirtualScreenReaderAdapter();
+  const session = new AuditSession();
   const registry = new ToolRegistry();
-  registry.register(createVoiceOverTools(voiceOverAdapter));
-  registry.register(createNavigationTools(appManager, focusTracker));
-  registry.register(createSetupTools(voiceOverAdapter));
-  registry.register(createAuditTools(auditSession));
-  registry.register(createReportTools(auditSession));
+
+  registry.register(createVirtualTools(adapter));
+  registry.register(createAuditTools(session));
+  registry.register(createReportTools(session));
 
   // --- Tools ---
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
@@ -65,12 +49,12 @@ export function createServer(): Server {
 
   // --- Prompts ---
   server.setRequestHandler(ListPromptsRequestSchema, async () => ({
-    prompts: listVoiceOverPrompts(),
+    prompts: listVirtualPrompts(),
   }));
 
   server.setRequestHandler(GetPromptRequestSchema, async (request) => {
     const { name, arguments: args } = request.params;
-    const messages = getVoiceOverPromptMessages(
+    const messages = getVirtualPromptMessages(
       name,
       (args as Record<string, string | undefined>) ?? {},
     );
@@ -82,16 +66,12 @@ export function createServer(): Server {
 
   // --- Resources ---
   server.setRequestHandler(ListResourcesRequestSchema, async () => ({
-    resources: listResources(auditSession),
+    resources: listResources(session),
   }));
 
   server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
-    const { uri } = request.params;
-    const content = readResource(uri, auditSession);
-    return {
-      contents: [content],
-    };
+    return readResource(request.params.uri, session);
   });
 
   return server;
-}
+};

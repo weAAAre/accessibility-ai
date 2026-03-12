@@ -3,9 +3,8 @@ import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { Tool } from '@modelcontextprotocol/sdk/types.js';
-import type { ScreenReaderPort } from '../screen-readers/screen-reader.port.js';
-import type { ToolHandler, ToolModule } from '../tools/tool-registry.js';
-import { result } from '../tools/tool-registry.js';
+import type { ScreenReaderPort, ToolHandler, ToolModule } from '@weaaare/mcp-auditor-core';
+import { result } from '@weaaare/mcp-auditor-core';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

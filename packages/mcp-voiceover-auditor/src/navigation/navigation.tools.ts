@@ -1,6 +1,6 @@
 import type { Tool } from '@modelcontextprotocol/sdk/types.js';
-import type { ToolHandler, ToolModule } from '../tools/tool-registry.js';
-import { result } from '../tools/tool-registry.js';
+import type { ToolHandler, ToolModule } from '@weaaare/mcp-auditor-core';
+import { result } from '@weaaare/mcp-auditor-core';
 import type { ApplicationManager } from './application-manager.js';
 import type { FocusTracker } from './focus-tracker.js';
 

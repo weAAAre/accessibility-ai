@@ -1,11 +1,11 @@
 {
-  "name": "@weaaare/mcp-voiceover-auditor",
+  "name": "@weaaare/mcp-virtual-screen-reader-auditor",
   "version": "0.0.1",
-  "description": "MCP server for voiceover accessibility auditing — analyzing and improving screen reader output for better accessibility",
+  "description": "MCP server for virtual screen reader accessibility auditing — headless browser-based screen reader simulation that works on any OS",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "mcp-voiceover-auditor": "dist/index.js"
+    "mcp-virtual-screen-reader-auditor": "dist/index.js"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,9 +20,10 @@
     "test": "rstest --passWithNoTests"
   },
   "dependencies": {
-    "@guidepup/guidepup": "catalog:",
+    "@guidepup/virtual-screen-reader": "catalog:",
     "@modelcontextprotocol/sdk": "catalog:",
-    "@weaaare/mcp-auditor-core": "workspace:*"
+    "@weaaare/mcp-auditor-core": "workspace:*",
+    "playwright-core": "catalog:"
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
@@ -35,23 +36,18 @@
     "mcp",
     "accessibility",
     "a11y",
-    "voiceover",
+    "virtual-screen-reader",
     "screen-reader",
-    "macos",
-    "a11y",
-    "wcag"
+    "wcag",
+    "headless"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/weAAAre/accessibility-ai.git",
-    "directory": "packages/mcp-voiceover-auditor"
+    "directory": "packages/mcp-virtual-screen-reader-auditor"
   },
-  "homepage": "https://github.com/weAAAre/accessibility-ai/tree/main/packages/mcp-voiceover-auditor#readme",
+  "homepage": "https://github.com/weAAAre/accessibility-ai/tree/main/packages/mcp-virtual-screen-reader-auditor#readme",
   "bugs": {
     "url": "https://github.com/weAAAre/accessibility-ai/issues"
-  },
-  "author": "weAAAre <hola@weAAAre.com> (https://weAAAre.com)",
-  "engines": {
-    "node": ">=24"
   }
 }

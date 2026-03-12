@@ -11,6 +11,8 @@ catalog:
   "@rstest/core": "0.9.0"
   "@types/node": "25.3.5"
   "@guidepup/guidepup": "0.24.1"
+  "@guidepup/virtual-screen-reader": "0.32.1"
+  playwright-core: "1.58.2"
   color2k: "2.0.3"
   lefthook: "2.1.3"
   turbo: "2.8.14"

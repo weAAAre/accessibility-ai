@@ -24,6 +24,9 @@ catalogs:
     '@guidepup/guidepup':
       specifier: 0.24.1
       version: 0.24.1
+    '@guidepup/virtual-screen-reader':
+      specifier: 0.32.1
+      version: 0.32.1
     '@modelcontextprotocol/sdk':
       specifier: 1.27.1
       version: 1.27.1
@@ -39,6 +42,9 @@ catalogs:
     lefthook:
       specifier: 2.1.3
       version: 2.1.3
+    playwright-core:
+      specifier: 1.58.2
+      version: 1.58.2
     turbo:
       specifier: 2.8.14
       version: 2.8.14
@@ -112,20 +118,70 @@ importers:
         specifier: 'catalog:'
         version: 5.9.3
 
+  packages/mcp-auditor-core:
+    dependencies:
+      '@modelcontextprotocol/sdk':
+        specifier: 'catalog:'
+        version: 1.27.1(zod@3.25.76)
+    devDependencies:
+      '@biomejs/biome':
+        specifier: 'catalog:'
+        version: 2.4.6
+      '@rstest/core':
+        specifier: 'catalog:'
+        version: 0.9.0(core-js@3.45.1)
+      '@types/node':
+        specifier: 'catalog:'
+        version: 25.3.5
+      '@weaaare/config':
+        specifier: workspace:*
+        version: link:../config
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+
+  packages/mcp-virtual-screen-reader-auditor:
+    dependencies:
+      '@guidepup/virtual-screen-reader':
+        specifier: 'catalog:'
+        version: 0.32.1
+      '@modelcontextprotocol/sdk':
+        specifier: 'catalog:'
+        version: 1.27.1(zod@3.25.76)
+      '@weaaare/mcp-auditor-core':
+        specifier: workspace:*
+        version: link:../mcp-auditor-core
+      playwright-core:
+        specifier: 'catalog:'
+        version: 1.58.2
+    devDependencies:
+      '@biomejs/biome':
+        specifier: 'catalog:'
+        version: 2.4.6
+      '@rstest/core':
+        specifier: 'catalog:'
+        version: 0.9.0(core-js@3.45.1)
+      '@types/node':
+        specifier: 'catalog:'
+        version: 25.3.5
+      '@weaaare/config':
+        specifier: workspace:*
+        version: link:../config
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+
   packages/mcp-voiceover-auditor:
     dependencies:
       '@guidepup/guidepup':
         specifier: 'catalog:'
         version: 0.24.1
-      '@guidepup/virtual-screen-reader':
-        specifier: ^0.32.1
-        version: 0.32.1
       '@modelcontextprotocol/sdk':
         specifier: 'catalog:'
         version: 1.27.1(zod@3.25.76)
-      playwright-core:
-        specifier: ^1.58.2
-        version: 1.58.2
+      '@weaaare/mcp-auditor-core':
+        specifier: workspace:*
+        version: link:../mcp-auditor-core
     devDependencies:
       '@biomejs/biome':
         specifier: 'catalog:'

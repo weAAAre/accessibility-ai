@@ -1,0 +1,10 @@
+{
+  "extends": "@weaaare/config/tsconfig/library.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "types": ["node"],
+    "resolveJsonModule": true
+  },
+  "include": ["src"]
+}

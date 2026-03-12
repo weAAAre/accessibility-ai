@@ -3,7 +3,7 @@ import type {
   ClickOptions,
   ScreenReaderCommandResult,
   ScreenReaderPort,
-} from '../screen-reader.port.js';
+} from '@weaaare/mcp-auditor-core';
 
 const PERFORM_COMMANDS: Record<string, string> = {
   findNextHeading: 'findNextHeading',

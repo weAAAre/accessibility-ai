@@ -1,12 +1,12 @@
 import { readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
-import { type Browser, type BrowserContext, chromium, type Page } from 'playwright-core';
 import type {
   ClickOptions,
   ScreenReaderCommandResult,
   ScreenReaderPort,
-} from '../screen-reader.port.js';
+} from '@weaaare/mcp-auditor-core';
+import { type Browser, type BrowserContext, chromium, type Page } from 'playwright-core';
 
 const _require = createRequire(import.meta.url);
 const BROWSER_BUNDLE_PATH = join(
@@ -17,10 +17,7 @@ const BROWSER_BUNDLE_PATH = join(
 );
 const BUNDLE_INTERCEPT_URL = 'https://virtual-sr-local/bundle.js';
 
-/**
- * Maps VoiceOver perform command names to Virtual Screen Reader command names.
- */
-const VOICEOVER_TO_VIRTUAL: Record<string, string> = {
+const ADAPT_VIRTUAL_COMMANDS: Record<string, string> = {
   findNextHeading: 'moveToNextHeading',
   findPreviousHeading: 'moveToPreviousHeading',
   findNextLink: 'moveToNextLink',
@@ -61,23 +58,14 @@ export class VirtualScreenReaderAdapter implements ScreenReaderPort {
       this.context = null;
     }
     if (!this.browser) {
-      this.browser = await chromium.launch({
-        headless: true,
-        channel: 'chrome',
-      });
+      this.browser = await chromium.launch({ headless: true, channel: 'chrome' });
     }
     this.context = await this.browser.newContext({ bypassCSP: true });
     this.page = await this.context.newPage();
-
-    // Intercept the bundle URL and serve the local file
     const bundleSource = readFileSync(BROWSER_BUNDLE_PATH, 'utf-8');
     await this.page.route(BUNDLE_INTERCEPT_URL, (route) => {
-      route.fulfill({
-        contentType: 'application/javascript',
-        body: bundleSource,
-      });
+      route.fulfill({ contentType: 'application/javascript', body: bundleSource });
     });
-
     return this.page;
   }
 
@@ -204,7 +192,7 @@ export class VirtualScreenReaderAdapter implements ScreenReaderPort {
   }
 
   async perform(command: string): Promise<ScreenReaderCommandResult> {
-    const virtualCommand = VOICEOVER_TO_VIRTUAL[command] ?? command;
+    const virtualCommand = ADAPT_VIRTUAL_COMMANDS[command] ?? command;
     const data = await this.getPage().evaluate(async (cmd: string) => {
       const v = (globalThis as any).__guidepupVirtual;
       const cmdValue = v.commands[cmd];
@@ -280,17 +268,11 @@ export class VirtualScreenReaderAdapter implements ScreenReaderPort {
     await this.getPage().evaluate(
       async (opts: { button: string; clickCount: number }) => {
         const v = (globalThis as any).__guidepupVirtual;
-        await v.click({
-          button: opts.button,
-          clickCount: opts.clickCount,
-        });
+        await v.click({ button: opts.button, clickCount: opts.clickCount });
       },
       { button, clickCount },
     );
-    return {
-      action: 'clicked mouse',
-      spokenPhrase: `${button} click x${clickCount}`,
-    };
+    return { action: 'clicked mouse', spokenPhrase: `${button} click x${clickCount}` };
   }
 
   async detect(): Promise<boolean> {

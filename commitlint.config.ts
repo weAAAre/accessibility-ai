@@ -10,6 +10,8 @@ const config: UserConfig = {
       [
         // packages
         'mcp-a11y-color',
+        'mcp-auditor-core',
+        'mcp-virtual-screen-reader-auditor',
         'mcp-voiceover-auditor',
         // skills
         'skills',

@@ -1,7 +1,6 @@
 import type { Tool } from '@modelcontextprotocol/sdk/types.js';
-import type { ToolHandler, ToolModule } from '../../tools/tool-registry.js';
-import { result } from '../../tools/tool-registry.js';
-import type { ScreenReaderPort } from '../screen-reader.port.js';
+import type { ScreenReaderPort, ToolHandler, ToolModule } from '@weaaare/mcp-auditor-core';
+import { result } from '@weaaare/mcp-auditor-core';
 
 const PERFORM_COMMAND_NAMES = [
   'findNextHeading',
