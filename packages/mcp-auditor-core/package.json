@@ -26,6 +26,15 @@
     "@weaaare/config": "workspace:*",
     "typescript": "catalog:"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weAAAre/accessibility-ai.git",
+    "directory": "packages/mcp-auditor-core"
+  },
+  "homepage": "https://github.com/weAAAre/accessibility-ai/tree/main/packages/mcp-auditor-core#readme",
+  "bugs": {
+    "url": "https://github.com/weAAAre/accessibility-ai/issues"
+  },
   "author": "weAAAre <hola@weAAAre.com> (https://weAAAre.com)",
   "engines": {
     "node": ">=24"

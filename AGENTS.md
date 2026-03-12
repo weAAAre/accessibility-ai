@@ -4,9 +4,13 @@
 
 This monorepo provides **accessibility-focused skills and MCP servers** for AI coding agents. It is maintained by [weAAAre](https://github.com/weAAAre) and published under the `@weAAAre` npm scope.
 
-- `packages/` — MCP server packages (e.g. `mcp-a11y-color` for WCAG color contrast, color blindness simulation, palette analysis).
+- `packages/` — MCP server packages:
+  - `mcp-a11y-color` — WCAG color contrast, color blindness simulation, palette analysis.
+  - `mcp-voiceover-auditor` — macOS VoiceOver-based accessibility audits.
+  - `mcp-virtual-screen-reader-auditor` — Headless virtual screen reader audits (cross-platform).
+  - `mcp-auditor-core` — Shared audit session, findings, reports, and tool registry (internal, not published).
 - `packages/config` — Shared configuration (tsconfig, rstest base config).
-- `skills/` — Agent skills (markdown-based knowledge modules on accessibility topics like WCAG compliance, ARIA patterns).
+- `skills/` — Agent skills (markdown-based knowledge modules on accessibility topics like ARIA patterns).
 
 ## Stack
 
@@ -120,7 +124,7 @@ Format: `type(scope): description`
 
 **Types:** `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
 
-**Scopes:** `mcp-a11y-color`, `skills`, `wcag-compliance`, `packages`, `root`, `ci`, `deps`, `release`.
+**Scopes:** `mcp-a11y-color`, `mcp-auditor-core`, `mcp-virtual-screen-reader-auditor`, `mcp-voiceover-auditor`, `skills`, `aria-patterns`, `packages`, `root`, `ci`, `deps`, `release`.
 
 Subject must be lowercase, no period, max 100 characters.
 
@@ -134,7 +138,7 @@ Subject must be lowercase, no period, max 100 characters.
 ## Adding a New Package
 
 1. Create a directory under `packages/<name>/`.
-2. Add `package.json` with `"name": "@weAAAre/<name>"`, `"type": "module"`, and `catalog:` dependency references.
+2. Add `package.json` with `"name": "@weaaare/<name>"`, `"type": "module"`, and `catalog:` dependency references.
 3. Extend `@weaaare/config/tsconfig/library.json` in `tsconfig.json`.
 4. Add the scope to `commitlint.config.ts` in the `scope-enum` rule.
 
