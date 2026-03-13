@@ -1,6 +1,6 @@
 {
   "name": "@weaaare/mcp-voiceover-auditor",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "MCP server for voiceover accessibility auditing — analyzing and improving screen reader output for better accessibility",
   "license": "MIT",
   "type": "module",
