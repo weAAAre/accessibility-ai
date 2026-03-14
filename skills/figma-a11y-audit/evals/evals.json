@@ -1,0 +1,23 @@
+{
+  "skill_name": "figma-a11y-audit",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Tengo un archivo Figma con comentarios de auditoría de accesibilidad. Necesito generar un Excel con todos los errores encontrados y capturas de evidencia de cada uno.",
+      "expected_output": "The agent verifies Figma connection, fetches comments, parses audit comments with Error:/Criterio: fields, captures PNG evidence of each affected node, and generates errores-accesibilidad.xlsx with all 7 columns properly formatted and evidencias/ folder with screenshots.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I need to export the accessibility issues from my Figma file into a report. The comments follow the format 'Componente: X. Error: Y. Criterio: Z. Solucion: W'. Can you generate the spreadsheet with evidence screenshots?",
+      "expected_output": "Same workflow as eval 1 but triggered from an English prompt. Should still produce Spanish-column Excel and follow the complete 6-step workflow.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Acabo de terminar la revisión de accesibilidad en Figma y he dejado todos los errores como comentarios. ¿Puedes generar el informe Excel con evidencias? Algunos comentarios no tienen el campo Metodología.",
+      "expected_output": "The agent should handle missing Metodología field by inferring from WCAG criterion (e.g., 1.4.3 → Color, 1.1.1 → Lector). Should also handle missing Instancia with default value. Excel and evidencias generated correctly.",
+      "files": []
+    }
+  ]
+}

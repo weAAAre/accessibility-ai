@@ -19,6 +19,7 @@ npx skills add weAAAre/a11y-agents-kit@aria-patterns
 | Skill | Description |
 | --- | --- |
 | [aria-patterns](./aria-patterns/) | Accessible ARIA patterns for interactive UI components |
+| [figma-a11y-audit](./figma-a11y-audit/) | Generate Excel accessibility audit reports from Figma comments with evidence screenshots |
 
 ## Contributing a new skill
 
