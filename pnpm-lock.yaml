@@ -45,6 +45,12 @@ catalogs:
     playwright-core:
       specifier: 1.58.2
       version: 1.58.2
+    silabajs:
+      specifier: 2.1.0
+      version: 2.1.0
+    syllable:
+      specifier: 5.0.1
+      version: 5.0.1
     turbo:
       specifier: 2.8.14
       version: 2.8.14
@@ -98,6 +104,37 @@ importers:
       color2k:
         specifier: 'catalog:'
         version: 2.0.3
+      zod:
+        specifier: 'catalog:'
+        version: 3.25.76
+    devDependencies:
+      '@biomejs/biome':
+        specifier: 'catalog:'
+        version: 2.4.6
+      '@rstest/core':
+        specifier: 'catalog:'
+        version: 0.9.0(core-js@3.45.1)
+      '@types/node':
+        specifier: 'catalog:'
+        version: 25.3.5
+      '@weaaare/config':
+        specifier: workspace:*
+        version: link:../config
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+
+  packages/mcp-a11y-readability:
+    dependencies:
+      '@modelcontextprotocol/sdk':
+        specifier: 'catalog:'
+        version: 1.27.1(zod@3.25.76)
+      silabajs:
+        specifier: 'catalog:'
+        version: 2.1.0
+      syllable:
+        specifier: 'catalog:'
+        version: 5.0.1
       zod:
         specifier: 'catalog:'
         version: 3.25.76
@@ -573,6 +610,9 @@ packages:
 
   '@types/node@25.3.5':
     resolution: {integrity: sha512-oX8xrhvpiyRCQkG1MFchB09f+cXftgIXb3a7UUa4Y3wpmZPw5tyZGTLWhlESOLq1Rq6oDlc8npVU2/9xiCuXMA==}
+
+  '@types/pluralize@0.0.29':
+    resolution: {integrity: sha512-BYOID+l2Aco2nBik+iYS4SZX0Lf20KPILP5RGmM1IgzdwNdTs0eebiFriOPcej1sX9mLnSoiNte5zcFxssgpGA==}
 
   accepts@2.0.0:
     resolution: {integrity: sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng==}
@@ -1221,6 +1261,9 @@ packages:
     resolution: {integrity: sha512-8Ofs/AUQh8MaEcrlq5xOX0CQ9ypTF5dl78mjlMNfOK08fzpgTHQRQPBxcPlEtIw0yRpws+Zo/3r+5WRby7u3Gg==}
     engines: {node: '>= 0.6'}
 
+  normalize-strings@1.1.1:
+    resolution: {integrity: sha512-fARPRdTwmrQDLYhmeh7j/eZwrCP6WzxD6uKOdK/hT/uKACAE9AG2Bc2dgqOZLkfmmctHpfcJ9w3AQnfLgg3GYg==}
+
   object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
@@ -1315,6 +1358,10 @@ packages:
     resolution: {integrity: sha512-yZkEtftgwS8CsfYo7nm0KE8jsvm6i/PTgVtB8DL726wNf6H2IMsDuxCpJj59KDaxCtSnrWan2AeDqM7JBaultg==}
     engines: {node: '>=18'}
     hasBin: true
+
+  pluralize@8.0.0:
+    resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
+    engines: {node: '>=4'}
 
   prettier@2.8.8:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
@@ -1448,6 +1495,9 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
 
+  silabajs@2.1.0:
+    resolution: {integrity: sha512-GYrT+lzW+T6DAtYBpaEnLcLzJI6nfMXSTsYr5PEEAyRWiLPA470zvBaYgJz6LWGemFpqlQbDBLxyUv65w7yq9A==}
+
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
@@ -1487,6 +1537,10 @@ packages:
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  syllable@5.0.1:
+    resolution: {integrity: sha512-HWtNCp6v7J8H0lrT8j1HHjfOLltRoDcC7QRFVu25p4BE52JqetXG65nqC7CsatT8WQRfY4Qvh93BWJIUxbmXFg==}
+    hasBin: true
 
   term-size@2.2.1:
     resolution: {integrity: sha512-wK0Ri4fOGjv/XPy8SBHZChl8CM7uMc5VML7SqiQ0zG7+J5Vr+RMQDoHa2CNT6KHUnTGIXH34UDMkPzAUyapBZg==}
@@ -2116,6 +2170,8 @@ snapshots:
     dependencies:
       undici-types: 7.18.2
 
+  '@types/pluralize@0.0.29': {}
+
   accepts@2.0.0:
     dependencies:
       mime-types: 3.0.2
@@ -2703,6 +2759,8 @@ snapshots:
 
   negotiator@1.0.0: {}
 
+  normalize-strings@1.1.1: {}
+
   object-assign@4.1.1: {}
 
   object-inspect@1.13.4: {}
@@ -2771,6 +2829,8 @@ snapshots:
   pkce-challenge@5.0.1: {}
 
   playwright-core@1.58.2: {}
+
+  pluralize@8.0.0: {}
 
   prettier@2.8.8: {}
 
@@ -2934,6 +2994,8 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
+  silabajs@2.1.0: {}
+
   slash@3.0.0: {}
 
   spawndamnit@3.0.1:
@@ -2964,6 +3026,12 @@ snapshots:
   strip-bom@3.0.0: {}
 
   supports-preserve-symlinks-flag@1.0.0: {}
+
+  syllable@5.0.1:
+    dependencies:
+      '@types/pluralize': 0.0.29
+      normalize-strings: 1.1.1
+      pluralize: 8.0.0
 
   term-size@2.2.1: {}
 

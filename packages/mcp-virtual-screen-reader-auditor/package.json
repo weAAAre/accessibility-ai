@@ -1,6 +1,6 @@
 {
   "name": "@weaaare/mcp-virtual-screen-reader-auditor",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "MCP server for virtual screen reader accessibility auditing — headless browser-based screen reader simulation that works on any OS",
   "license": "MIT",
   "type": "module",

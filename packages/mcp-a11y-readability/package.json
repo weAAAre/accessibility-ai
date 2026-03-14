@@ -1,11 +1,11 @@
 {
-  "name": "@weaaare/mcp-voiceover-auditor",
-  "version": "1.0.0",
-  "description": "MCP server for voiceover accessibility auditing — analyzing and improving screen reader output for better accessibility",
+  "name": "@weaaare/mcp-a11y-readability",
+  "version": "0.1.1",
+  "description": "MCP server for text readability analysis — Spanish and English readability formulas, WCAG 3.1.5 compliance, and plain language assessment",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "mcp-voiceover-auditor": "dist/index.js"
+    "mcp-a11y-readability": "dist/index.js"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -13,16 +13,17 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc && mkdir -p dist/utils && cp src/utils/*.applescript dist/utils/",
+    "build": "tsc",
     "check-types": "tsc --noEmit",
     "lint": "biome check .",
     "dev": "tsc --watch",
-    "test": "rstest --passWithNoTests"
+    "test": "rstest"
   },
   "dependencies": {
-    "@guidepup/guidepup": "catalog:",
     "@modelcontextprotocol/sdk": "catalog:",
-    "@weaaare/mcp-auditor-core": "workspace:^"
+    "silabajs": "catalog:",
+    "syllable": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
@@ -35,18 +36,20 @@
     "mcp",
     "accessibility",
     "a11y",
-    "voiceover",
-    "screen-reader",
-    "macos",
-    "a11y",
-    "wcag"
+    "readability",
+    "wcag",
+    "plain-language",
+    "flesch",
+    "fernandez-huerta",
+    "inflesz",
+    "legibilidad"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/weAAAre/a11y-agents-kit.git",
-    "directory": "packages/mcp-voiceover-auditor"
+    "directory": "packages/mcp-a11y-readability"
   },
-  "homepage": "https://github.com/weAAAre/a11y-agents-kit/tree/main/packages/mcp-voiceover-auditor#readme",
+  "homepage": "https://github.com/weAAAre/a11y-agents-kit/tree/main/packages/mcp-a11y-readability#readme",
   "bugs": {
     "url": "https://github.com/weAAAre/a11y-agents-kit/issues"
   },
