@@ -1,5 +1,6 @@
 packages:
   - "packages/*"
+  - "!packages/mcp-a11y-pdf"
 
 catalog:
   "@biomejs/biome": "2.4.6"
