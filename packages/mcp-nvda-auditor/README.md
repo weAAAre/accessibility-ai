@@ -352,6 +352,7 @@ nvda_stop
 
 ## Acknowledgements
 
+- **[Guidepup](https://www.guidepup.dev/)** — NVDA and screen reader automation library by Craig Morten, used under the [MIT License](https://github.com/guidepup/guidepup/blob/main/LICENSE).
 - **[W3C](https://www.w3.org/WAI/)** — for the [WCAG 2.2](https://www.w3.org/TR/WCAG22/) guidelines, [WAI-ARIA](https://www.w3.org/TR/wai-aria/) specification, and the [ARIA Authoring Practices Guide](https://www.w3.org/WAI/ARIA/apg/). W3C content is used under the [W3C Software and Document License](https://www.w3.org/copyright/software-license/).
 - **[a11ysupport.io](https://a11ysupport.io/)** — community-driven assistive-technology support data by Michael Fairchild, available under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 

@@ -1,6 +1,6 @@
 {
   "name": "@weaaare/mcp-nvda-auditor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "MCP server for NVDA accessibility auditing — drives NVDA on Windows to test web pages with a real screen reader and generate structured WCAG findings",
   "license": "MIT",
   "type": "module",
