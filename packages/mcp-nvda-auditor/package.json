@@ -1,0 +1,57 @@
+{
+  "name": "@weaaare/mcp-nvda-auditor",
+  "version": "0.1.0",
+  "description": "MCP server for NVDA accessibility auditing — drives NVDA on Windows to test web pages with a real screen reader and generate structured WCAG findings",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "mcp-nvda-auditor": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "check-types": "tsc --noEmit",
+    "lint": "biome check .",
+    "dev": "tsc --watch",
+    "test": "rstest --passWithNoTests"
+  },
+  "dependencies": {
+    "@guidepup/guidepup": "catalog:",
+    "@modelcontextprotocol/sdk": "catalog:",
+    "@weaaare/mcp-auditor-core": "workspace:^"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@rstest/core": "catalog:",
+    "@types/node": "catalog:",
+    "@weaaare/config": "workspace:*",
+    "typescript": "catalog:"
+  },
+  "keywords": [
+    "mcp",
+    "accessibility",
+    "a11y",
+    "nvda",
+    "screen-reader",
+    "windows",
+    "wcag",
+    "a11y-testing"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weAAAre/a11y-agents-kit.git",
+    "directory": "packages/mcp-nvda-auditor"
+  },
+  "homepage": "https://github.com/weAAAre/a11y-agents-kit/tree/main/packages/mcp-nvda-auditor#readme",
+  "bugs": {
+    "url": "https://github.com/weAAAre/a11y-agents-kit/issues"
+  },
+  "author": "weAAAre <hola@weAAAre.com> (https://weAAAre.com)",
+  "engines": {
+    "node": ">=24"
+  }
+}

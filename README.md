@@ -34,12 +34,18 @@ This monorepo contains two types of distributable content:
 | Package | WCAG 2.2 coverage | Install |
 |---------|-------------------|---------|
 | [`@weaaare/mcp-a11y-color`](./packages/mcp-a11y-color/) | Up to 5 success criteria (1.4.1, 1.4.3, 1.4.6, 1.4.11, 2.4.7) | `npx @weaaare/mcp-a11y-color` |
+| [`@weaaare/mcp-a11y-readability`](./packages/mcp-a11y-readability/) | SC 3.1.5 Reading Level (AAA) | `npx @weaaare/mcp-a11y-readability` |
 | [`@weaaare/mcp-voiceover-auditor`](./packages/mcp-voiceover-auditor/) | Up to 12 success criteria (1.1.1, 1.3.1, 2.1.1, 2.1.2, 2.4.1–2.4.6, 3.3.1, 3.3.2, 4.1.2) | `npx @weaaare/mcp-voiceover-auditor` |
 | [`@weaaare/mcp-virtual-screen-reader-auditor`](./packages/mcp-virtual-screen-reader-auditor/) | Up to 12 success criteria (same scope as VoiceOver auditor) | `npx @weaaare/mcp-virtual-screen-reader-auditor` |
+| [`@weaaare/mcp-nvda-auditor`](./packages/mcp-nvda-auditor/) | Up to 12 success criteria (1.1.1, 1.3.1, 2.1.1, 2.1.2, 2.4.1–2.4.6, 3.3.1, 3.3.2, 4.1.2) | `npx @weaaare/mcp-nvda-auditor` |
 
 #### `@weaaare/mcp-a11y-color`
 
 Real-time color accessibility verification for AI agents. Check WCAG 2.2 contrast ratios, simulate 8 types of color-vision deficiency, audit full design-token palettes, and get automatic fix suggestions — all while writing code.
+
+#### `@weaaare/mcp-a11y-readability`
+
+Text readability analysis for Spanish and English using 13 scientifically validated formulas (Flesch, Flesch-Kincaid, SMOG, Gunning Fog, Coleman-Liau, ARI, Fernández Huerta, Szigriszt-Pazos, INFLESZ, and more). Helps AI agents verify and improve content against WCAG 2.2 SC 3.1.5 Reading Level (AAA).
 
 #### `@weaaare/mcp-voiceover-auditor`
 
@@ -48,6 +54,10 @@ Drives macOS VoiceOver through AppleScript, letting an AI agent navigate pages e
 #### `@weaaare/mcp-virtual-screen-reader-auditor`
 
 Launches a headless browser with a virtual screen reader injected into the page. Same navigation and audit capabilities as the VoiceOver auditor but runs on **any OS** — no native screen reader install required.
+
+#### `@weaaare/mcp-nvda-auditor`
+
+Drives NVDA (NonVisual Desktop Access) on Windows through guidepup, letting an AI agent navigate pages with the world's most widely used free screen reader. Same structured audit capabilities as the VoiceOver auditor — browse mode single-letter navigation, heading/landmark/form traversal, spoken phrase capture, and WCAG finding logging — but using NVDA on Windows.
 
 > **Why screen-reader MCPs?**
 >
@@ -73,7 +83,7 @@ Reusable procedural knowledge for AI coding agents, distributed via [skills.sh](
 
 ### MCP Servers
 
-Install any of the MCP servers in your preferred client. Pick the servers you need — you can use one, two, or all three.
+Install any of the MCP servers in your preferred client. Pick the servers you need — you can use one or any combination.
 
 **Standard config** works in most MCP clients:
 
@@ -84,6 +94,10 @@ Install any of the MCP servers in your preferred client. Pick the servers you ne
       "command": "npx",
       "args": ["-y", "@weaaare/mcp-a11y-color"]
     },
+    "a11y-readability": {
+      "command": "npx",
+      "args": ["-y", "@weaaare/mcp-a11y-readability"]
+    },
     "voiceover-auditor": {
       "command": "npx",
       "args": ["-y", "@weaaare/mcp-voiceover-auditor"]
@@ -91,12 +105,16 @@ Install any of the MCP servers in your preferred client. Pick the servers you ne
     "virtual-screen-reader-auditor": {
       "command": "npx",
       "args": ["-y", "@weaaare/mcp-virtual-screen-reader-auditor"]
+    },
+    "nvda-auditor": {
+      "command": "npx",
+      "args": ["-y", "@weaaare/mcp-nvda-auditor"]
     }
   }
 }
 ```
 
-> **Note:** `mcp-voiceover-auditor` requires macOS with VoiceOver and AppleScript enabled. `mcp-virtual-screen-reader-auditor` works on any OS.
+> **Note:** `mcp-voiceover-auditor` requires macOS with VoiceOver and AppleScript enabled. `mcp-nvda-auditor` requires Windows with NVDA installed. `mcp-virtual-screen-reader-auditor` works on any OS.
 
 <details>
 <summary>VS Code</summary>
@@ -110,6 +128,10 @@ Add to your project's `.vscode/mcp.json` (or user-level `settings.json` under `"
       "command": "npx",
       "args": ["-y", "@weaaare/mcp-a11y-color"]
     },
+    "a11y-readability": {
+      "command": "npx",
+      "args": ["-y", "@weaaare/mcp-a11y-readability"]
+    },
     "voiceover-auditor": {
       "command": "npx",
       "args": ["-y", "@weaaare/mcp-voiceover-auditor"]
@@ -117,6 +139,10 @@ Add to your project's `.vscode/mcp.json` (or user-level `settings.json` under `"
     "virtual-screen-reader-auditor": {
       "command": "npx",
       "args": ["-y", "@weaaare/mcp-virtual-screen-reader-auditor"]
+    },
+    "nvda-auditor": {
+      "command": "npx",
+      "args": ["-y", "@weaaare/mcp-nvda-auditor"]
     }
   }
 }
@@ -128,11 +154,17 @@ Or install via the VS Code CLI:
 # Color contrast tools
 code --add-mcp '{"name":"a11y-color","command":"npx","args":["-y","@weaaare/mcp-a11y-color"]}'
 
+# Readability analysis tools
+code --add-mcp '{"name":"a11y-readability","command":"npx","args":["-y","@weaaare/mcp-a11y-readability"]}'
+
 # VoiceOver auditor (macOS only)
 code --add-mcp '{"name":"voiceover-auditor","command":"npx","args":["-y","@weaaare/mcp-voiceover-auditor"]}'
 
 # Virtual screen reader auditor (any OS)
 code --add-mcp '{"name":"virtual-screen-reader-auditor","command":"npx","args":["-y","@weaaare/mcp-virtual-screen-reader-auditor"]}'
+
+# NVDA auditor (Windows only)
+code --add-mcp '{"name":"nvda-auditor","command":"npx","args":["-y","@weaaare/mcp-nvda-auditor"]}'
 ```
 
 After installation, the servers will be available for use with GitHub Copilot in VS Code.
@@ -151,6 +183,10 @@ Follow the MCP install [guide](https://modelcontextprotocol.io/quickstart/user).
       "command": "npx",
       "args": ["-y", "@weaaare/mcp-a11y-color"]
     },
+    "a11y-readability": {
+      "command": "npx",
+      "args": ["-y", "@weaaare/mcp-a11y-readability"]
+    },
     "voiceover-auditor": {
       "command": "npx",
       "args": ["-y", "@weaaare/mcp-voiceover-auditor"]
@@ -158,6 +194,10 @@ Follow the MCP install [guide](https://modelcontextprotocol.io/quickstart/user).
     "virtual-screen-reader-auditor": {
       "command": "npx",
       "args": ["-y", "@weaaare/mcp-virtual-screen-reader-auditor"]
+    },
+    "nvda-auditor": {
+      "command": "npx",
+      "args": ["-y", "@weaaare/mcp-nvda-auditor"]
     }
   }
 }
@@ -172,8 +212,10 @@ Use the Claude Code CLI:
 
 ```bash
 claude mcp add a11y-color npx -y @weaaare/mcp-a11y-color
+claude mcp add a11y-readability npx -y @weaaare/mcp-a11y-readability
 claude mcp add voiceover-auditor npx -y @weaaare/mcp-voiceover-auditor
 claude mcp add virtual-screen-reader-auditor npx -y @weaaare/mcp-virtual-screen-reader-auditor
+claude mcp add nvda-auditor npx -y @weaaare/mcp-nvda-auditor
 ```
 
 </details>
@@ -185,8 +227,10 @@ Go to `Cursor Settings` → `MCP` → `Add new MCP Server`. Use `command` type w
 
 ```
 npx -y @weaaare/mcp-a11y-color
+npx -y @weaaare/mcp-a11y-readability
 npx -y @weaaare/mcp-voiceover-auditor
 npx -y @weaaare/mcp-virtual-screen-reader-auditor
+npx -y @weaaare/mcp-nvda-auditor
 ```
 
 Or add them to your `.cursor/mcp.json`:
@@ -198,6 +242,10 @@ Or add them to your `.cursor/mcp.json`:
       "command": "npx",
       "args": ["-y", "@weaaare/mcp-a11y-color"]
     },
+    "a11y-readability": {
+      "command": "npx",
+      "args": ["-y", "@weaaare/mcp-a11y-readability"]
+    },
     "voiceover-auditor": {
       "command": "npx",
       "args": ["-y", "@weaaare/mcp-voiceover-auditor"]
@@ -205,6 +253,10 @@ Or add them to your `.cursor/mcp.json`:
     "virtual-screen-reader-auditor": {
       "command": "npx",
       "args": ["-y", "@weaaare/mcp-virtual-screen-reader-auditor"]
+    },
+    "nvda-auditor": {
+      "command": "npx",
+      "args": ["-y", "@weaaare/mcp-nvda-auditor"]
     }
   }
 }
@@ -233,6 +285,12 @@ Add the following to your [`cline_mcp_settings.json`](https://docs.cline.bot/mcp
       "args": ["-y", "@weaaare/mcp-a11y-color"],
       "disabled": false
     },
+    "a11y-readability": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@weaaare/mcp-a11y-readability"],
+      "disabled": false
+    },
     "voiceover-auditor": {
       "type": "stdio",
       "command": "npx",
@@ -243,6 +301,12 @@ Add the following to your [`cline_mcp_settings.json`](https://docs.cline.bot/mcp
       "type": "stdio",
       "command": "npx",
       "args": ["-y", "@weaaare/mcp-virtual-screen-reader-auditor"],
+      "disabled": false
+    },
+    "nvda-auditor": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@weaaare/mcp-nvda-auditor"],
       "disabled": false
     }
   }
@@ -265,8 +329,10 @@ Use the Codex CLI:
 
 ```bash
 codex mcp add a11y-color npx "-y" "@weaaare/mcp-a11y-color"
+codex mcp add a11y-readability npx "-y" "@weaaare/mcp-a11y-readability"
 codex mcp add voiceover-auditor npx "-y" "@weaaare/mcp-voiceover-auditor"
 codex mcp add virtual-screen-reader-auditor npx "-y" "@weaaare/mcp-virtual-screen-reader-auditor"
+codex mcp add nvda-auditor npx "-y" "@weaaare/mcp-nvda-auditor"
 ```
 
 Or edit `~/.codex/config.toml`:
@@ -276,6 +342,10 @@ Or edit `~/.codex/config.toml`:
 command = "npx"
 args = ["-y", "@weaaare/mcp-a11y-color"]
 
+[mcp_servers.a11y-readability]
+command = "npx"
+args = ["-y", "@weaaare/mcp-a11y-readability"]
+
 [mcp_servers.voiceover-auditor]
 command = "npx"
 args = ["-y", "@weaaare/mcp-voiceover-auditor"]
@@ -283,6 +353,10 @@ args = ["-y", "@weaaare/mcp-voiceover-auditor"]
 [mcp_servers.virtual-screen-reader-auditor]
 command = "npx"
 args = ["-y", "@weaaare/mcp-virtual-screen-reader-auditor"]
+
+[mcp_servers.nvda-auditor]
+command = "npx"
+args = ["-y", "@weaaare/mcp-nvda-auditor"]
 ```
 
 </details>
@@ -293,8 +367,10 @@ args = ["-y", "@weaaare/mcp-virtual-screen-reader-auditor"]
 Go to `Advanced settings` → `Extensions` → `Add custom extension`. Use type `STDIO` and set the command to one of:
 
 - `npx -y @weaaare/mcp-a11y-color`
+- `npx -y @weaaare/mcp-a11y-readability`
 - `npx -y @weaaare/mcp-voiceover-auditor`
 - `npx -y @weaaare/mcp-virtual-screen-reader-auditor`
+- `npx -y @weaaare/mcp-nvda-auditor`
 
 </details>
 
@@ -325,6 +401,17 @@ npx skills add weAAAre/a11y-agents-kit@aria-patterns
 ```
 
 ---
+
+## MCP tools — `@weaaare/mcp-a11y-readability`
+
+| Tool | Description |
+|------|-------------|
+| `analyze-readability` | Run all formulas for a language, get consensus difficulty level — supports Spanish (7 formulas) and English (6 formulas) |
+| `analyze-readability-formula` | Run a single named formula on a text (use `list-formulas` to discover available IDs) |
+| `get-text-stats` | Extract word, sentence, syllable, and character statistics from text |
+| `list-formulas` | List all available readability formulas, optionally filtered by language |
+| `suggest-readability-improvements` | Get actionable suggestions to simplify text: shorter sentences, simpler words, fewer polysyllabic terms |
+| `compare-texts` | Compare readability of two texts side by side — useful for before/after rewrites |
 
 ## MCP tools — `@weaaare/mcp-a11y-color`
 
@@ -372,6 +459,37 @@ npx skills add weAAAre/a11y-agents-kit@aria-patterns
 | `focus_ensure_browser` | Ensure browser is focused before audit navigation |
 | `focus_record` | Record focus breadcrumbs for recovery during audits |
 | `focus_last_known` | Recover last known focus position if context is lost |
+| `start_audit` | Start a structured audit session with metadata |
+| `log_finding` | Log violations/warnings/passes with WCAG criteria and recommendations |
+| `get_audit_status` | Get current audit progress and finding counters |
+| `get_findings` | Retrieve findings from current or latest session |
+| `end_audit` | End audit session and return summary data |
+| `generate_report` | Generate reports in Markdown, JSON, or CSV |
+
+## MCP tools — `@weaaare/mcp-nvda-auditor`
+
+| Tool | Description |
+|------|-------------|
+| `check_setup` | Verify Windows environment and NVDA availability before starting an audit |
+| `nvda_start` | Start NVDA — must be called before any navigation commands |
+| `nvda_stop` | Stop NVDA and clean up the session |
+| `nvda_next` | Move the NVDA cursor to the next item (Down Arrow equivalent) |
+| `nvda_previous` | Move the NVDA cursor to the previous item (Up Arrow equivalent) |
+| `nvda_act` | Perform the default action for the focused item (Enter equivalent) |
+| `nvda_interact` | No-op on NVDA (cross-screen-reader API compatibility) |
+| `nvda_stop_interacting` | No-op on NVDA (cross-screen-reader API compatibility) |
+| `nvda_press` | Press a key — supports NVDA browse mode single-letter shortcuts (H, K, D, F, …) |
+| `nvda_type` | Type text into the currently focused item |
+| `nvda_perform` | Execute a named NVDA keyboard command: headings, landmarks, links, forms, tables, reading |
+| `nvda_item_text` | Get text of the item currently in the NVDA cursor |
+| `nvda_last_spoken_phrase` | Get the last phrase spoken by NVDA |
+| `nvda_spoken_phrase_log` | Get the full spoken phrase log for this session |
+| `nvda_item_text_log` | Get the full visited item text log for this session |
+| `nvda_clear_spoken_phrase_log` | Clear the spoken phrase log |
+| `nvda_clear_item_text_log` | Clear the visited item text log |
+| `nvda_click` | Click the mouse at the current NVDA cursor position |
+| `nvda_detect` | Detect whether NVDA is supported on the current system |
+| `nvda_default` | Check whether NVDA is the default screen reader for this OS |
 | `start_audit` | Start a structured audit session with metadata |
 | `log_finding` | Log violations/warnings/passes with WCAG criteria and recommendations |
 | `get_audit_status` | Get current audit progress and finding counters |

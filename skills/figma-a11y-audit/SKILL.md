@@ -65,13 +65,32 @@ Follow these steps in order. Complete each step before moving to the next.
 
 Use `figma_get_status` to confirm a Figma file is connected. If there's no connection, point the user to `references/setup.md` and stop.
 
-### Step 2 — Fetch all comments
+### Step 2 — Determine scope and fetch comments
 
-Use `figma_get_comments` with `include_resolved: true` to get every comment (active and resolved).
+If the user provided a Figma URL (e.g., `https://www.figma.com/design/FILE_KEY/Name?node-id=45-123`), extract the `node-id` query parameter to scope the audit to that specific frame or page. Normalise the separator to `:` (the URL may use `-` or `%3A` — both become `45:123`).
 
-### Step 3 — Parse audit comments
+Use `figma_execute` to collect every node ID within that linked frame:
+
+```javascript
+const root = await figma.getNodeByIdAsync("LINKED_NODE_ID");
+const ids = [];
+const collect = (n) => {
+  ids.push(n.id);
+  if ('children' in n) n.children.forEach(collect);
+};
+collect(root);
+return { ids, total: ids.length };
+```
+
+Store this set — it is used in Step 3 to restrict comments to those anchored within the linked frame. If the user didn't provide a URL with a `node-id`, skip the collection and keep all audit comments in scope.
+
+Then use `figma_get_comments` with `include_resolved: true` to fetch every comment (active and resolved).
+
+### Step 3 — Parse and scope audit comments
 
 Filter comments that contain at least `"Error:"` or `"Criterio:"` in the text — these are audit comments. Ignore generic comments.
+
+**Scope filtering:** if a node-id scope was established in Step 2, further filter to only those comments whose `client_meta.node_id` is present in the collected set. Discard every comment that falls outside the linked frame — only issues belonging to the specific link the user provided should appear in the report. This is important: without this filter, comments from unrelated pages or frames would pollute the output.
 
 Parsing rules:
 
@@ -94,7 +113,7 @@ Each Figma comment has metadata indicating where it's anchored:
 
 The goal is to screenshot the most specific UI element the comment points to, not the entire frame. Here's the strategy:
 
-**Find the most specific child node.** Use `figma_execute` to walk the node tree and find the smallest child that contains the comment's position:
+**Find the best node for context.** The screenshot must be specific enough to pinpoint the issue, but large enough for stakeholders to recognise where it lives in the UI. Prefer `COMPONENT` or `INSTANCE` nodes — they represent self-contained UI components with meaningful surrounding context. Enforce a minimum size so that tiny elements (icons, labels, individual text nodes) never produce unrecognisable crops:
 
 ```javascript
 const parent = await figma.getNodeByIdAsync(NODE_ID);
@@ -102,8 +121,11 @@ const parentBox = parent.absoluteBoundingBox;
 const absX = parentBox.x + OFFSET_X;
 const absY = parentBox.y + OFFSET_Y;
 
+const MIN_WIDTH = 200;
+const MIN_HEIGHT = 120;
+
 let bestNode = parent;
-let bestArea = Infinity;
+let bestArea = parentBox ? parentBox.width * parentBox.height : Infinity;
 
 const walk = (n) => {
   if ('absoluteBoundingBox' in n && n.absoluteBoundingBox) {
@@ -111,7 +133,9 @@ const walk = (n) => {
     if (absX >= b.x && absX <= b.x + b.width &&
         absY >= b.y && absY <= b.y + b.height) {
       const area = b.width * b.height;
-      if (area < bestArea && area > 100) {
+      const isComponent = n.type === 'COMPONENT' || n.type === 'INSTANCE';
+      const hasContext = b.width >= MIN_WIDTH && b.height >= MIN_HEIGHT;
+      if ((isComponent || hasContext) && area < bestArea) {
         bestArea = area;
         bestNode = n;
       }
@@ -124,7 +148,19 @@ const walk = (n) => {
 walk(parent);
 ```
 
-If the found node is very small (< 50×50 px), go up to its parent for better context.
+If the selected node is still below the minimum size (e.g., a standalone icon or a short label), walk up the ancestor chain until you reach a node that meets the threshold:
+
+```javascript
+let contextNode = bestNode;
+while (contextNode.parent && contextNode.absoluteBoundingBox) {
+  const b = contextNode.absoluteBoundingBox;
+  if (b.width >= MIN_WIDTH && b.height >= MIN_HEIGHT) break;
+  contextNode = contextNode.parent;
+}
+bestNode = contextNode;
+```
+
+This guarantees every screenshot shows enough surrounding UI for the issue to be immediately recognisable — no 30×30 icon crops without context.
 
 **Export as PNG in base64.** The Figma Plugin API doesn't have filesystem access, so export the node as bytes and manually encode to base64 within `figma_execute`:
 

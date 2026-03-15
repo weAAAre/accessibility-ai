@@ -12,6 +12,7 @@ const config: UserConfig = {
         'mcp-a11y-color',
         'mcp-a11y-readability',
         'mcp-auditor-core',
+        'mcp-nvda-auditor',
         'mcp-virtual-screen-reader-auditor',
         'mcp-voiceover-auditor',
         // skills
